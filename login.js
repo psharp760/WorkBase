@@ -4,7 +4,7 @@ function loginCheck() {
     var psw = document.getElementById("psw").value;
     
     if(uname=="0000" && psw=="0000"){
-        window.open('profile.html');
+        window.location.href = "profile.html";
     } else {
         alert("*** Incorrect username or password ***");
     } 
