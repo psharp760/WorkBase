@@ -1,0 +1,98 @@
+li{
+list-style: none;
+}
+
+ul{
+margin: 0;
+padding: 0;
+}
+
+.calendar-container{
+display: grid;
+grid-template-columns: 60px auto;
+grid-template-rows: auto;
+gap: 1px 1px;
+grid-template-areas:
+".header"
+"timeslots-container main";
+}
+
+.weekdays,
+.daynumbers{
+display: grid;
+grid-template-columns:repeat(7,1fr);
+}
+
+.daynumbers{
+min-height:2em;
+}
+
+.weekdays{
+background:lightgray;
+}
+
+.header{
+background:gray;
+grid-area:header;
+}
+
+.timeslots-container{
+background:lightgray;
+grid-area:timeslots-container;
+justify-container:left;
+}
+
+.timeslots{
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.timeslots li{
+min-height: 60px;
+}
+
+.timeslots li:after{
+content: " ";
+position:absolute;
+left: 10px;
+width:100%;
+height: 1px;
+background: lightgray;
+z-index: 1;
+}
+
+.event-container{
+display:grid;
+grid-template-columns: repeat(7, 1fr);
+grid-template-rows: repeat(36, 1fr);
+grid-area:main;
+position:relative;
+}
+
+.slot{
+position: absolute;
+background:#8b1ff7;
+border-radius: 5px;
+z-index: 5;
+color: white;
+font-size: 12px;
+}
+
+.slot-1{
+height: 180px;
+grid-row:1;
+grid-column:1;
+}
+
+.slot-2{
+height: 300px;
+grid-row:1;
+grid-column:3;
+}
+
+.slot-3{
+height: 240px;
+grid-row:15;
+grid-column:5;
+}
