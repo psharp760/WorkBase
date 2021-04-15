@@ -1,7 +1,7 @@
 //user = {firstname, lastname, profilePhoto} but 'User (index)' for this example 
 const userData = [['Employee User 1', 'images/user-icon.png'],
                   ['Employee User 2', 'images/man1.png'],
-                  ['Employee User 3', 'images/calender-icon.png'],
+                  ['Employee User 3', 'images/calendar-icon.png'],
                   ['Employee User 4', 'images/timesheet-icon.png'],
                   ['Employee User 5', 'images/key-icon.png'],
                   ['Employee User 6', 'images/user-icon.png'],
