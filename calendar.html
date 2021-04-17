@@ -7,8 +7,30 @@
     <link rel="stylesheet" href="CalendarStyle.css"/>
     <title>Workbase: Calendar</title>
 </head>
-<body>
 
+<!--Navigation menu on top of calander page-->
+<div style="width:800px auto;" class="topnav">
+    <a class = "active" href="calendar.html">Calendar</a>
+    <a href="timesheet.html">Timesheet</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Logout</a>
+</div>
+
+<!--Dropdown to change which employee within calendar-->
+<div class="employee"></div>
+    <label for="employee">Employee:</label>
+
+    <select name="employee" id="employee">
+        <option value="Emp1"selected >Emp1</option>
+        <option value="Emp2">Emp2</option>
+        <option value="Emp3">Emp3</option>
+        <option value="Emp4">Emp4</option>
+      </select>
+</div>
+
+
+
+<body>
     <main>
         <div class="calendar-container">
              <div class="header">
