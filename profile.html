@@ -2,6 +2,7 @@
 <html>
 <head>
    <link rel="stylesheet" href="style.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
    <header>
@@ -19,7 +20,7 @@
 
 <div class="tab-wrap">
    <input class="tab-switch" type="radio" name="tab-name" id="tab1" checked>
-   <label class="tab-label" for="tab1" id="edit-icon">Edit Profile</label>
+   <label class="tab-label" for="tab1" id="edit-icon" onClick="ShowInfo()">Edit Profile</label>
    <div class="tab-content">
    <div class="inside-tab-container">
       <p>
@@ -28,6 +29,9 @@
             <div class="row">
                <div class="column">
                    <div class="img-container">
+                      <img id="your-photo" class="profile-img"/>
+                      <div class="upload-btn">Upload</div>
+                      <input class="file-upload" type="file" accept="image/*"/>
                    </div>
                </div>
                <div class="info-container">
@@ -64,7 +68,7 @@
    </div>
 
    <input class="tab-switch" type="radio" name="tab-name" id="tab2" checked>
-   <label class="tab-label" for="tab2" id="key-icon">Change Password</label>
+   <label class="tab-label" for="tab2" id="key-icon" onClick="ShowInfo()">Change Password</label>
    <div class="tab-content">
    <div class="inside-tab-container">
       <p>
@@ -84,7 +88,7 @@
    </div>
 
    <input class="tab-switch" type="radio" name="tab-name" id="tab3" checked>
-   <label class="tab-label" for="tab3" id="delete-icon">Delete account</label>
+   <label class="tab-label" for="tab3" id="delete-icon" onClick="ShowInfo()">Delete account</label>
    <div class="tab-content">
    <div class="inside-tab-container">
       <p>

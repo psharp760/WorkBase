@@ -282,13 +282,34 @@ label {
     box-sizing: border-box;
     text-indent: 5px;
 }
-
+.file-upload{
+    display: none;
+}
+.upload-btn{
+    background-color: #ccc;
+    padding: 4px;
+    border-radius: 8px;
+    margin-left: 40px;
+    margin-right: 40px;
+    display: block;
+    font-size: 11px;
+}
+.upload-btn:hover{
+    cursor: pointer;
+}
 .profile-img {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
     size: 80%;
     margin: 0 auto;
 }
+.img-container{
+    width: 250px;
+    height: 200px;
+}
+
 .firstname-container {
     width: 225px;
     padding-right: 5px;
