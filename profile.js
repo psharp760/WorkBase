@@ -24,9 +24,9 @@ function ShowPhoto(photo) {
     document.querySelector('.profile-img').src = photo;
 }
 function ShowInfo() {
-    document.querySelector('#fname').value = currUser[0];
-    document.querySelector('#lname').value = currUser[1];
-    document.querySelector('#addr').value = currUser[2];
+    fname = document.querySelector('#fname').value = currUser[0];
+    lname = document.querySelector('#lname').value = currUser[1];
+    addr = document.querySelector('#addr').value = currUser[2];
     ShowPhoto(currUser[3]);
 }
 function UpdateInfo() {
