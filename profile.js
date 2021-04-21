@@ -1,5 +1,6 @@
 const currUser = ['Work', 'Base', 'workbase@gmail.com', 'images/man1.png', '0000'];
 var fname, lname, addr;
+var change=false;
 
 
 $(document).ready(function(){
@@ -8,6 +9,7 @@ $(document).ready(function(){
             var reader = new FileReader();
             reader.onload = function(e){
                 $('.profile-img').attr('src', e.target.result);
+                change = true;
             }
             reader.readAsDataURL(input.files[0]);
         }
@@ -20,23 +22,20 @@ $(document).ready(function(){
     });
 });
 
-function ShowPhoto(photo) {
-    document.querySelector('.profile-img').src = photo;
-}
 function ShowInfo() {
     fname = document.querySelector('#fname').value = currUser[0];
     lname = document.querySelector('#lname').value = currUser[1];
     addr = document.querySelector('#addr').value = currUser[2];
-    ShowPhoto(currUser[3]);
+    photo = document.querySelector('.profile-img').src = currUser[3];
 }
 function UpdateInfo() {
     var newFname = document.querySelector('#fname').value;
     var newLname = document.querySelector('#lname').value;
     var newAddr = document.querySelector('#addr').value;
  
-    if(fname!=newFname || lanem!=newLname || addr!=newAddr)
+    if(fname!=newFname || lname!=newLname || addr!=newAddr || change)
     {
-        alert("Updated your Info\nName: "+ newFname + " " + newLname + "\nEmail: " + newAddr);
+        alert("Updated your profile information");
     }
 }
 function UpdatePassword() {
@@ -58,5 +57,4 @@ function DeleteAccount() {
     }
 }
 
-ShowPhoto(currUser[3]);
 ShowInfo()
