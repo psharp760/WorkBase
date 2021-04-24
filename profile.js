@@ -1,4 +1,5 @@
-const currUser = ['Work', 'Base', 'workbase@gmail.com', 'images/man1.png', '0000'];
+const currUser = [_fname, _lname, _email, 'images/man1.png', _pass];
+
 var fname, lname, addr;
 var change=false;
 
@@ -37,24 +38,27 @@ function UpdateInfo() {
     {
         alert("Updated your profile information");
     }
+    else
+    {
+        alert("Profile information was not updated. Please enter a different name or email.")
+        return false;
+    }
 }
 function UpdatePassword() {
     var psw = document.querySelector('#cur-psw').value;
     var new_psw = document.querySelector('#new-psw').value;
 
-    if(psw != currUser[4] && psw.length!=0 && new_psw.length!=0){
+    if(psw != currUser[4] || psw.length == 0){
         alert("**Incorrect Password\nPlease enter correct password.");
-    }else if(psw == currUser[4]){
-        /* CODE:: update password of the database*/
-    }
+        return false
 }
 function DeleteAccount() {
     if(confirm("Are you sure you will delete your account?"))
     {
-        /* CODE:: remove info from the database */
-
-        window.location.href = "login.html";
+        window.location.href = "login.php";
     }
+    else
+  return false;
 }
 
 ShowInfo()
