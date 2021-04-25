@@ -48,10 +48,10 @@
     </style>
     <div id="content">
      
-        <img src="logo.png" height="100px" width="250px" alt=" " />
+        <img src="images/logo.png" height="100px" width="250px" alt=" " />
     </div>
 
-    <form action = "CreateAccountPHP.php" method = "post" onsubmit="return continueornot();">
+    <form action = "CreateAccount.php" method = "post" onsubmit="return continueornot();">
         <center>
             <input type="text" placeholder="First Name" id="fname" name="fname" required />
             <br />
@@ -66,7 +66,7 @@
             <button type="submit" name = "signUp" class="signupbtn">Sign Up</button><br />
           
             <p>Already have an account?
-            <a href="">Login</a></p>
+            <a href="login.php">Login</a></p>
         </center>
     </form>
     <script src = "createAccount.js"></script>
@@ -80,11 +80,11 @@ $conn = OpenCon();
 if(isset($_POST['signUp']))
 {
 //echo "Connected Successfully";
-	$firstname = filter_input(INPUT_POST, 'fname');
-	$lastname = filter_input(INPUT_POST, 'lname');
-	$email = filter_input(INPUT_POST, 'email');
-	$username = filter_input(INPUT_POST, 'username');
-	$password = filter_input(INPUT_POST, 'psw');
+	$firstname = $_POST['fname'];
+	$lastname = $_POST['lname'];
+	$email = $_POST['email'];
+	$username = $_POST['username'];
+	$password = $_POST['psw'];
 
 
 	$sql = "INSERT INTO users(first_name, last_name, email, pass_word,username)
@@ -96,7 +96,7 @@ if(isset($_POST['signUp']))
 	} 
 	else {
   //echo "Error: " . $sql . "<br>" . $conn->error;
-		header("Location:CreateAccountPHP.php");
+		header("Location:createAccount.php");
 	}
 }
 CloseCon($conn);
