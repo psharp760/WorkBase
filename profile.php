@@ -2,7 +2,17 @@
 
 session_start();
 
+
+include 'db_connection.php';
+$conn = OpenCon();
+
+$uname = $_SESSION['username'];
+
+$getUserInfo = "SELECT *FROM users WHERE username = '$uname'";
+$result = mysqli_query($conn, $getUserInfo);
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -19,13 +29,13 @@ session_start();
             <li><img src="images/calendar-icon.png" id="icon-nav"><a href="calendar.html">Calendar</a></li>
             <li><img src="images/timesheet-icon.png" id="icon-nav"><a href="timesheet.html">Timesheet</a></li>
             <li><img src="images/user-icon.png" id="icon-nav"><a href="profile.php" id="current">Profile</a></li>
-            <li><img src="images/logout-icon.png" id="icon-nav"><a href="login.php">Logout</a></li>
+            <li><img src="images/logout-icon.png" id="icon-nav"><a href="logout.php">Logout</a></li>
          </ul>
       </div>
    </header>
 <div class="tab-wrap">
    <input class="tab-switch" type="radio" name="tab-name" id="tab1" checked>
-   <label class="tab-label" for="tab1" id="edit-icon" onClick="ShowInfo()">Edit Profile</label>
+   <label class="tab-label" for="tab1" id="edit-icon" >Edit Profile</label>
    <div class="tab-content">
    <div class="inside-tab-container">
       <p>
@@ -35,6 +45,7 @@ session_start();
                <div class="column">
                    <div class="img-container">
                       <img id="your-photo" class="profile-img"/>
+                      <img src = "images/man1.png">
                       <div class="upload-btn">Upload</div>
                       <input class="file-upload" type="file" accept="image/*"/>
                    </div>
@@ -47,12 +58,20 @@ session_start();
                               <form method = 'post' action = 'profile.php' onclick = 'return UpdateInfo()'>
                               <label for="firstname">First name</label> 
                               <input class="profile-input" type="text" id="fname" name="firstname" required>
+                               <script type="text/javascript"> 
+                                 var elem = document.getElementById("fname"); // Get text field
+                                 elem.value = "<?php echo $row['first_name'] ?>" // Change field
+                              </script>
                            </div>
                         </div>
                         <div class="column">
                            <div class="lastname-container">
                               <label for="firstname">Last name</label> 
                               <input class="profile-input" type="text" id="lname" name="lastname" required>
+                              <script type="text/javascript"> 
+                                 var elem = document.getElementById("lname"); // Get text field
+                                 elem.value = "<?php echo $row['last_name'] ?>" // Change field
+                              </script>
                            </div>
                         </div>
                      </div>
@@ -60,6 +79,10 @@ session_start();
                         <div class="email-container">
                            <label for="email">Email</label> 
                            <input class="profile-input" type="text" id="addr" name="email" required>
+                           <script type="text/javascript"> 
+                              var elem = document.getElementById("addr"); // Get text field
+                              elem.value = "<?php echo $row['email'] ?>" // Change field
+                           </script>
                         </div>
                      </div>
                   </div>
@@ -75,7 +98,7 @@ session_start();
    </div>
 
    <input class="tab-switch" type="radio" name="tab-name" id="tab2">
-   <label class="tab-label" for="tab2" id="key-icon" onClick="ShowInfo()">Change Password</label>
+   <label class="tab-label" for="tab2" id="key-icon" onclick="ShowInfo()">Change Password</label>
    <div class="tab-content">
    <div class="inside-tab-container">
       <p>
@@ -103,7 +126,7 @@ session_start();
       <p>
          <h2>Delete Account</h2>
          <div class="tag-container">
-            <form method = 'post' action= 'login.php' onsubmit = 'return confirm("Are you sure you will delete your account?")'>
+            <form method = 'post' onsubmit = 'return confirm("Are you sure you will delete your account?")'>
             <p class="pg1">You are about delete your account. This will remove:
             <br><br>- your personal information
             <br>- your calendar and timesheet data
@@ -116,18 +139,8 @@ session_start();
    </div>
    </div>
 
-
-
 <?php
 
-include 'db_connection.php';
-$conn = OpenCon();
-
-$uname = $_SESSION['username'];
-
-$getUserInfo = "SELECT *FROM users WHERE username = '$uname'";
-$result = mysqli_query($conn, $getUserInfo);
-$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 if(isset($_POST['update']))
 {
@@ -141,7 +154,25 @@ if(isset($_POST['update']))
       $getUserInfo = "SELECT *FROM users WHERE username = '$uname'";
       $result = mysqli_query($conn, $getUserInfo);
       $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      
+
+?>
+      <script type="text/javascript"> 
+      var elem = document.getElementById("fname"); // Get text field
+      elem.value = "<?php echo $row['first_name'] ?>" // Change field
+      </script>
+      <script type="text/javascript"> 
+      var elem = document.getElementById("lname"); // Get text field
+      elem.value = "<?php echo $row['last_name'] ?>" // Change field
+      </script>
+      <script type="text/javascript"> 
+      var elem = document.getElementById("addr"); // Get text field
+      elem.value = "<?php echo $row['email'] ?>" // Change field
+      </script>
+      <script type="text/javascript">
+         alert("Updated user information");
+      </script>
+                              
+<?php
    }
    else{
       echo "Error" . mysqli_error($conn);
@@ -154,32 +185,46 @@ if(isset($_POST['changePass']))
    $curpass = $_POST['cur-pasw'];
    $newpass = $_POST['new-psw'];
 
-   $update = "UPDATE users SET pass_word = '$newpass' where username = '$uname'";
-   if(mysqli_query($conn,$update)){
-      $getUserInfo = "SELECT *FROM users WHERE username = '$uname'";
-      $result = mysqli_query($conn, $getUserInfo);
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-   }
+   if($curpass == $row['pass_word']){
+      $update = "UPDATE users SET pass_word = '$newpass' where username = '$uname'";
+      if(mysqli_query($conn,$update)){
+         $getUserInfo = "SELECT *FROM users WHERE username = '$uname'";
+         $result = mysqli_query($conn, $getUserInfo);
+         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+         }
+         ?>
+         <script type = "text/javascript">
+            alert("Password has been changed")
+         </script>
 
+      }
+   else{
+     ?> 
+      <script type = "text/javascript">
+        alert("Incorrect password: Current password does not match!");
+      </script>
+        <?php
+   }
 }
+
 
 if(isset($_POST['delete']))
 {
 
    $sql = "DELETE FROM users WHERE username = '$uname'";
-   mysqli_query($conn,$sql);
+   if(mysqli_query($conn,$sql) == true)
+   {
+      ?>
+      <script type ="text/javascript">
+         window.location = "login.php";
+      </script>
+      <?php
+   }
 
 }
 
 ?>
 
-<script type="text/javascript"> _fname = "<?= $row['first_name']; ?>";</script> 
-<script type="text/javascript"> _lname = "<?= $row['last_name']; ?>";</script>
-<script type="text/javascript"> _email = "<?= $row['email']; ?>";</script>
-<script type="text/javascript"> _pass = "<?= $row['pass_word']; ?>";</script>
-<script type="text/javascript" src="profile.js"></script> 
-
-
-
+<script src="profile.js"></script>
 </body>
 </html>
