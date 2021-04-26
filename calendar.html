@@ -2,15 +2,17 @@
 
 <html>
 <head>
-  
+
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
+    <script src="calendar.js"></script>
     <title>Workbase: Calendar</title>
 </head>
 
 <body>
-    <header> <!--Navigation menu on top of calander page-->
-        <img  src="images/logo.png" alt="logo" id="logo_img">
+    <header>
+        <!--Navigation menu on top of calander page-->
+        <img src="images/logo.png" alt="logo" id="logo_img">
 
         <div class="nav-container">
             <ul id="nav">
@@ -20,77 +22,22 @@
                 <li><img src="images/logout-icon.png" id="icon-nav"><a href="login.html">Logout</a></li>
             </ul>
         </div>
-   </header>
+    </header>
     <main>
+        <div id="cal-wrap">
+            <!-- [Date SELECTOR] -->
+            <div id="cal-date">
+                <select id="cal-mth"></select>
+                <select id="cal-yr"></select>
+                <input id="cal-set" type="button" value="SET" />
+            </div>
 
-    <!--Dropdown to change which employee within calendar-->
-    <div class="employee"></div>
-        <label for="employee">Employee:</label>
+            <!-- [CALENDAR] -->
+            <div id="cal-container"></div>
 
-        <select name="employee" id="employee">
-            <option value="Emp1"selected >Emp1</option>
-            <option value="Emp2">Emp2</option>
-            <option value="Emp3">Emp3</option>
-            <option value="Emp4">Emp4</option>
-        </select>
-    </div>
-
-        <div class="calendar-container">
-             <div class="header">
-                 <ul class="weekdays">
-                     <li>Sunday</li>
-                     <li>Monday</li>
-                     <li>Tuesday</li>
-                     <li>Wednesday</li>
-                     <li>Thursday</li>
-                     <li>Friday</li>
-                     <li>Saturday</li>
-                 </ul>
-
-                 <ul class="daynumbers">
-                     <li>18</li>
-                     <li>19</li>
-                     <li>20</li>
-                     <li>21</li>
-                     <li>22</li>
-                     <li>23</li>
-                     <li>24</li>
-                 </ul>
-               </div>
-
-        <div class="timeslots-container">
-            <ul class="timeslots">
-                <li>9 am</li>
-                <li>10 am</li>
-                <li>11 am</li>
-                <li>12 pm</li>
-                <li>1 pm</li>
-                <li>2 pm</li>
-                <li>3 pm</li>
-                <li>4 pm</li>
-                <li>5 pm</li>
-            </ul>
+            <!-- [EVENT] -->
+            <div id="cal-event"></div>
         </div>
-
-        <div class="event-container">
-            <div class="slot slot-1">
-                <div class="event-status"></div>
-                <span>Task 1: 9am-12pm</span>
-                <p>Task 1 description.</p>
-            </div>
-            <div class="slot slot-2">
-                <div class="event-status"></div>
-                <span>Task 2: 9am-2pm</span>
-                <p>Task 2 description.</p>
-            </div>
-            <div class="slot slot-3">
-                <div class="event-status"></div>
-                <span>Task 3: 12:30pm-4:30pm</span>
-                <p>Task 3 description.</p>
-            </div>
-        </div>
-
-             </div>
     </main>
 </body>
 </html>
