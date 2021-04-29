@@ -745,3 +745,77 @@ position: relative;
   background: #aa80ff;
   color: #fff;
 }
+
+/*Create account style*/
+.createAccount-input-user {
+    width: 100%;
+    padding: 15px 30px;
+    border-radius: 5px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-indent:0px;
+    background-repeat: no-repeat;
+    background-position: 18px center;
+    background-size: 30px 30px;
+}
+
+button.signupbtn {
+ background-color: #8444f2;
+ color: white;
+ padding: 10px 14px;
+ margin: 8px 0;
+ border: none;
+ cursor: pointer;
+ width: 100%;
+ opacity: 0.9;
+ }
+
+button.signupbtn:hover {
+opacity: 1;
+ }
+
+a{
+color:dodgerblue;
+}
+
+/*forgot password style*/
+
+h3 {
+    text-align: center;
+    color: #9933FF;
+    font-weight: bold;
+    font-size:  70px;
+    margin-top: 150px;
+}
+
+.forgotpswd-input-email {
+    width: 100%;
+    padding: 15px 30px;
+    border-radius: 5px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-indent: 40px;
+    background-image: url("images/email-icon.png");
+    background-repeat: no-repeat;
+    background-position: 18px center;
+    background-size: 30px 30px;
+}
+
+button.sendbtn {
+ background-color: #8444f2;
+ color: white;
+ padding: 10px 14px;
+ margin: 8px 0;
+ border: none;
+ cursor: pointer;
+ width: 32%;
+ opacity: 0.9;
+ }
+
+button.sendbtn:hover {
+ opacity: 1;
+ }
