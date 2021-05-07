@@ -1,94 +1,11 @@
-//user = {firstname, lastname, profilePhoto} but 'User (index)' for this example 
-const userData = [{ emp_name:'Employee User 1', user_img:'images/user-icon.png', user_id: 1},
-                  { emp_name:'Work Base', user_img:'images/man1.png', user_id: 2},
-                  { emp_name:'Employee User 3', user_img:'images/user-icon.png', user_id: 3},
-                  { emp_name:'Employee User 4', user_img:'images/user-icon.png', user_id: 4},
-                  { emp_name:'Employee User 5', user_img:'images/user-icon.png', user_id: 5},
-                  { emp_name:'Employee User 6', user_img:'images/user-icon.png', user_id: 6},
-                  { emp_name:'Employee User 7', user_img:'images/user-icon.png', user_id: 7},
-                  { emp_name:'Employee User 8', user_img:'images/user-icon.png', user_id: 8},
-                  { emp_name:'Employee User 9', user_img:'images/user-icon.png', user_id: 9},
-                  { emp_name:'Employee User 10', user_img:'images/user-icon.png', user_id: 10},
-                  { emp_name:'Employee User 11', user_img:'images/user-icon.png', user_id: 11},
-                  { emp_name:'Employee User 12', user_img:'images/user-icon.png', user_id: 12},
-                  { emp_name:'Employee User 13', user_img:'images/user-icon.png', user_id: 13},
-                  { emp_name:'Employee User 14', user_img:'images/user-icon.png', user_id: 14},
-                  { emp_name:'Employee User 15', user_img:'images/user-icon.png', user_id: 15},
-                  { emp_name:'Employee User 16', user_img:'images/user-icon.png', user_id: 16}];
-const timesheetDatabase = [{emp_name:'Work Base', start_time:'2021.4.1.7:30', end_time:'2021.4.1.11:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.2.12:45', end_time:'2021.4.2.17:30', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.3.8:30', end_time:'2021.4.3.14:00', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.4.6:30', end_time:'2021.4.4.11:00', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.7.12:00', end_time:'2021.4.7.16:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.15.13:30', end_time:'2021.4.15.17:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.16.5:15', end_time:'2021.4.16.11:15', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.17.12:30', end_time:'2021.4.17.19:30', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.18.7:30', end_time:'2021.4.18.11:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.19.13:00', end_time:'2021.4.19.18:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.21.14:00', end_time:'2021.4.21.20:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.22.11:30', end_time:'2021.4.22.19:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.25.11:30', end_time:'2021.4.25.17:45', user_id: 2},
-                           {emp_name:'Work Base', start_time:'2021.4.29.5:30', end_time:'2021.4.29.12:45', user_id: 2}];
-
 
 const monthInString = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const dayInString = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const timeInString = [' AM', ' PM'];
-const leftTh = ['Date', 'Day', 'Total'];
-const timeSeparation = ['00', '15', '30', '45'];
-const timeHour = ['4 AM','5 AM','6 AM','7 AM','8 AM','9 AM','10 AM','11 AM','12 PM','1 PM','2 PM','3 PM','4 PM','5 PM','6 PM','7 PM','8 PM','9 PM','10 PM','11 PM','12 AM','1 AM','2 AM','3 AM',]
 
 const date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth() + 1;
 let cur = 0;
 
-class TimesheetSchedule {
-    constructor(i, m, d, start, end, t) {
-        this.e_id = i;
-        this.month = m;
-        this.date = d;
-        this.s_time = start;
-        this.e_time = end;
-        this.total_min = t;
-    }
-}
-function timeCalc(i, s, e){
-    var id = i;
-    var m = parseInt(s.split('.')[1]);
-    var d = parseInt(s.split('.')[2]);
-    var st = s.split('.')[3];
-    var et = e.split('.')[3];
-    var s_hour = parseInt(s.split('.')[3].split(':')[0]);
-    var s_min = parseInt(s.split('.')[3].split(':')[1]);
-    var s_time = s_hour*60 + s_min;
-    var e_hour = parseInt(e.split('.')[3].split(':')[0]);
-    var e_min = parseInt(e.split('.')[3].split(':')[1]);
-    var e_time = e_hour*60 + e_min;
-    var t = e_time-s_time;
-    var newTimesheetSchedule = new TimesheetSchedule(id, m, d, st, et, t);
-
-    return newTimesheetSchedule;
-}
-function makeAllList(){
-    var all_list = new Array(); 
-    for(let i=0; i<timesheetDatabase.length; i++){
-        var num = timesheetDatabase[i].user_id;
-        var t_ob = timeCalc(num, timesheetDatabase[i].start_time, timesheetDatabase[i].end_time);
-        //var d = t_ob.date;
-        all_list.push(t_ob);
-    }
-    return all_list;
-}
-function makeIndividualList(){
-    var list = new Array();
-    for(let i=0; i<timesheetDatabase.length; i++){
-        var num = timesheetDatabase[i].user_id;
-        var t_ob = timeCalc(num, timesheetDatabase[i].start_time, timesheetDatabase[i].end_time);
-        list.push(t_ob);
-    }
-    return list;
-}
 function showTimesheet(i, year, month) {
     document.querySelector('.month-box').innerHTML = monthInString[month-1] + '  ' + year;
     let timesheetHtml = ''
@@ -102,27 +19,11 @@ function showTimesheet(i, year, month) {
     document.querySelector('#next').addEventListener('click', moveTimesheet);
 }
 
-function showOption() {
-    var count = document.getElementById("my-select").options.length;
-    if(userData.length > 0 && count < userData.length+1)
-    {
-        var x = document.createElement("option");
-        x.setAttribute("value", "0");
-        var t = document.createTextNode("all");
-        x.appendChild(t);
-        document.getElementById("my-select").appendChild(x);
 
-        for (let i=0; i<userData.length; i++) {
-            let num = i+1; 
-            var x = document.createElement("option");
-            x.setAttribute("value", num.toString());
-            var t = document.createTextNode(userData[i].emp_name);
-            x.appendChild(t);
-            document.getElementById("my-select").appendChild(x);
-        }
-    }
-}
+
 function chooseTimesheet(v){
+    //document.querySelector('.month-box').innerHTML = monthInString[month-1] + '  ' + year;
+
     var xml = new XMLHttpRequest();
     xml.onreadystatechange = function(){
         if(this.readState==4 && this.status==200){
@@ -131,10 +32,10 @@ function chooseTimesheet(v){
     };
     xml.open("GET", "timesheet.php?q="+v,true);
     xml.send();
-    //var my_option = document.querySelector('#my-select').value;
-    //var num = parseInt(my_option);
-    //cur = num;
-    //showTimesheet(num, year, month);
+
+    document.querySelector('#timesheet').innerHTML = timesheetHtml;
+    document.querySelector('#previous').addEventListener('click', moveTimesheet);
+    document.querySelector('#next').addEventListener('click', moveTimesheet);
 }
 
 function moveTimesheet(e) {
@@ -152,8 +53,11 @@ function moveTimesheet(e) {
             month = 1;
         }
     }
-    showTimesheet(cur, year, month)
-    document.querySelector('.month-box').innerHTML = monthInString[month-1] + '  ' + year;
+    var m = document.getElementById("monthYear");
+    m.value = month.toString() + year.toString();
+    //var v = document.getElementById("my-select").value;
+    //chooseTimesheet(v);
+    //document.querySelector('.month-box').innerHTML = monthInString[month-1] + '  ' + year;
 }
 
 function createAllTimesheet(year, month) {
@@ -226,89 +130,6 @@ function createAllTimesheet(year, month) {
     return timesheetHtml;
 }
 
-
-function createIndividualUserTimesheet(e_id, year, month) {
-    const startDate = new Date(year, month-1, 1);
-    const endDate = new Date(year, month, 0);
-    const endDayCount = endDate.getDate();
-    const day = startDate.getDay();
-    // for col span 
- 
-    let timesheetHtml = '';
-    timesheetHtml += '<div id="table2" class="table2-contents"><table><thead>' 
-    for (let i=0; i<2; i++) {
-        timesheetHtml += '<tr>'
-        //1st row
-        if(i==0) {
-            timesheetHtml += '<th colspan="3" id="left-size"></th>'
-            for(let k=0; k<timeHour.length; k++) {
-                timesheetHtml += '<th colspan="4" id="time-size">'+timeHour[k];
-            }
-        }  else {
-            for(let l=0; l<3; l++) {
-                timesheetHtml += '<td id="sub-left-size">'+ leftTh[l]+'</td>'
-            }
-            for(let m=0; m<96; m++) {
-                timesheetHtml += '<td id="min-size">'+ timeSeparation[m%4]+'</td>'
-            }
-        } 
-        timesheetHtml += '</tr>'
-    }
-    timesheetHtml += '</thead>'
-
-    var user = userData[e_id-1];
-    var cur_user_id = user.user_id;
-    var list = makeIndividualList();
-
-    for(let i=0; i<endDayCount; i++) {
-        timesheetHtml += '<tr><td id="sub-left-height">'+month+"/"+(i+1)+'</td>'
-                      +'<td id="sub-left-height">'+dayInString[(day+i)%7]+'</td>'
-        if(list.length>0&&cur_user_id==list[0].e_id&&list[0].month==month){
-            if(i+1==list[0].date){
-                var ht, mt;
-                var h = parseInt(list[0].total_min/60);
-                var m = list[0].total_min%60;
-                if(h<10){
-                    ht = '0'+ h.toString();
-                }else{
-                    ht = h.toString;
-                }
-                if(m<10){
-                    mt = '0'+ m.toString();
-                }else{
-                    mt = m.toString();
-                }
-                timesheetHtml +='<td id="sub-left-height">'+ ht+':'+mt+'</td>'
-                var s = list.shift();
-                var c_span = s.total_min/15;
-                var st = (parseInt(s.s_time.split(':')[0]*60)+s.s_time.split(':')[1]%60)/15;
-                for(let j=0; j<96; j++){
-                    if(j+16==st){
-                        if(m<1){
-                            timesheetHtml+='<td id="time-bar" colspan="'+c_span+'">'+h+' hour</td>'
-                        }else{
-                            timesheetHtml+='<td id="time-bar" colspan="'+c_span+'">'+h+' hour '+m+' min'+'</td>'
-                        }
-                        j+=c_span;
-                    }else{
-                        timesheetHtml+= '<td></td>'    
-                    }                
-                }
-            }else{
-                for(let j=0; j<96; j++){
-                    timesheetHtml+= '<td></td>'    
-                }
-            }   
-        }else{
-            for(let j=0; j<96; j++) {
-                timesheetHtml+= '<td></td>'
-            } 
-        }
-    }
-
-    timesheetHtml += '</table></div>'
-
-    return timesheetHtml ;
-}
 showOption();
 showTimesheet(cur, year, month);
+chooseTimesheet("");
