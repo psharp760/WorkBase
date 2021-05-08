@@ -2,74 +2,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="createAccount.js"></script>
     <title>WorkBase: CreateAccount</title>
 </head>
 <body>
-    <center>
-        <h1 style="color:#792ef9; font-size:50px;"><br />Create Account</h1>
-    </center>
-
-    <style>
-        <!-- logo,boxes,and link formats-->
-        #content {
-            position: relative;
-        }
-
-        #content img {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-        }
-
-        input[type=text], input[type=password] {
-            width: 30%;
-            padding: 10px;
-            margin: 5px 0 22px 0;
-          
-        }
-
-        .signupbtn {
-            background-color: #8444f2;
-            color: white;
-            padding: 10px 14px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 32%;
-            opacity: 0.9;
-        }
-
-            .signupbtn:hover {
-                opacity: 1;
-            }
-            a{
-                color:dodgerblue;
-            }
-    </style>
-    <div id="content">
-     
-        <img src="images/logo.png" height="100px" width="250px" alt=" " />
-    </div>
+  
+     <img src="images/logo.png" alt="logo" id="logo_img">
+     <h1>Create Account</h1>
 
     <form action = "CreateAccount.php" method = "post" onsubmit="return continueornot();">
-        <center>
-            <input type="text" placeholder="First Name" id="fname" name="fname" required />
-            <br />
-            <input type="text" placeholder="Last Name" id="lname" name="lname" required />
-            <br />
-            <input type="text" placeholder="Email" id="email" name="email" required />
-            <br />
-            <input type="text" placeholder="Username" id="username" name="username" required />
-            <br />
-            <input type="password" placeholder="Password" id="psw" name="psw" required />
-            <br />
-            <button type="submit" name = "signUp" class="signupbtn">Sign Up</button><br />
-          
-            <p>Already have an account?
-            <a href="login.php">Login</a></p>
+        <div class="container">
+            <input class="createAccount-input-user" type="text" id="fname" placeholder="First Name" name="fname" required>
+            <input class="createAccount-input-user" type="text" id="lname" placeholder="Last Name" name="lname" required>
+            <input class="createAccount-input-user" type="text" placeholder="Email" id="email" name="email" required>
+            <input class="createAccount-input-user" type="text" placeholder ="Username" id="username" name="username" required>
+            <input class="createAccount-input-user" type="password" placeholder="Password" id="psw" name="psw" required>
+            <button class="signupbtn" type="submit" name="signUp">Sign Up</button>
+        </div>
+            </form>
+            <center>
+            <p>Already have an account?<a href="login.php">Login</a></p><br/>
         </center>
-    </form>
-    <script src = "createAccount.js"></script>
+  
+  
 
 
 <?php
@@ -86,6 +42,27 @@ if(isset($_POST['signUp']))
 	$username = $_POST['username'];
 	$password = $_POST['psw'];
 
+    //check if username/email already exists
+    $getUserInfo = "SELECT *FROM users WHERE username = '$username'";
+    $getEmail = "SELECT *FROM users WHERE email = '$email'";
+    $emailResult = mysqli_query($conn,$getEmail);
+    $result = mysqli_query($conn,$getUserInfo);
+    if(mysqli_num_rows($result) == 1){
+        ?> <script type="text/javascript">
+            alert("Username already exits. Try another one!");
+        </script>
+        <?php
+    }
+    if(mysqli_num_rows($emailResult) == 1){
+        ?> <script type="text/javascript">
+            alert("Account already exists with this email.")
+            window.location = 'login.php';
+        </script>
+        <?php
+    }
+
+    if(mysqli_num_rows($result) == 0 && mysqli_num_rows($emailResult) == 0){
+
 
 	$sql = "INSERT INTO users(first_name, last_name, email, pass_word,username)
 	values ('$firstname', '$lastname', '$email','$password', '$username')";
@@ -97,7 +74,8 @@ if(isset($_POST['signUp']))
 	else {
   //echo "Error: " . $sql . "<br>" . $conn->error;
 		header("Location:createAccount.php");
-	}
+	   }
+    }
 }
 CloseCon($conn);
 
