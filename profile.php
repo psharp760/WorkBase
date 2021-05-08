@@ -19,6 +19,7 @@ $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 <head>
    <link rel="stylesheet" href="style.css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script type= "text/javascript" src = "profile.js"></script>
 </head>
 <body>
    <header>
@@ -43,11 +44,12 @@ $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
          <div class="profile-container">
             <div class="row">
                <div class="column">
-                   <div class="img-container">
-                      <img id="your-photo" class="profile-img"/>
-                      <img src = "images/man1.png">
-                      <div class="upload-btn">Upload</div>
-                      <input class="file-upload" type="file" accept="image/*"/>
+                   <div class = "img-container">
+                   	<form method = 'post' action = 'profile.php' enctype='multipart/form-data'>
+                   	<img src = "<?php echo $row['picture'] ?>" height = "128" width = "128" alt = "Image resize" >
+                   <input type = "file" id="fileToUpload" name = "fileToUpload">
+                   <button class = ".upload-btn" type = "submit" name = "upload">Upload</button>
+                  </form>
                    </div>
                </div>
                <div class="info-container">
@@ -179,6 +181,41 @@ if(isset($_POST['update']))
    }
 
 }
+if(isset($_POST['upload'])){
+	$name = $_FILES['fileToUpload']['name'];
+	$target_dir = "images/";
+	$target_file = $target_dir . basename($_FILES['fileToUpload']['name']);
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	$extensions_arr = array("jpg", "jpeg", "png", "gif");
+	if(in_array($imageFileType, $extensions_arr)){
+		//upload file
+		if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_dir.$name)){
+			//insert record
+			$query = "UPDATE users SET picture = '$target_dir$name' WHERE username = '$uname'";
+			if(mysqli_query($conn,$query)){
+    	  				$getUserInfo = "SELECT *FROM users WHERE username = '$uname'";
+	      				$result = mysqli_query($conn, $getUserInfo);
+      					$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      				
+
+				?>
+				<script type = "text/javascript">
+					alert("Updated profile picture");
+				</script>
+				<?php
+				}
+				else
+				{
+				?>
+				<script type = "text/javascript">
+					alert("Could not upload picture. Try again later");
+				</script>
+				<?php
+				}
+			}
+		}
+	}
+
 
 if(isset($_POST['changePass']))
 {
@@ -196,10 +233,10 @@ if(isset($_POST['changePass']))
          <script type = "text/javascript">
             alert("Password has been changed")
          </script>
-
+<?php
       }
    else{
-     ?> 
+     ?>
       <script type = "text/javascript">
         alert("Incorrect password: Current password does not match!");
       </script>
@@ -222,9 +259,6 @@ if(isset($_POST['delete']))
    }
 
 }
-
 ?>
-
-<script src="profile.js"></script>
 </body>
 </html>
