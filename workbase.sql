@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2021 at 12:53 AM
+-- Generation Time: May 13, 2021 at 07:37 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -24,16 +24,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `calendar`
+-- Table structure for table `events`
 --
 
-CREATE TABLE `calendar` (
-  `calendar_name` char(10) DEFAULT NULL,
-  `title` char(10) DEFAULT NULL,
-  `info` char(20) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `event_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `events` (
+  `evt_id` bigint(11) NOT NULL,
+  `evt_start` date NOT NULL,
+  `evt_end` date NOT NULL,
+  `evt_text` text NOT NULL,
+  `evt_color` varchar(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`) VALUES
+(1, '2021-05-10', '2021-05-10', 'Does this work?', '#f188da');
 
 -- --------------------------------------------------------
 
@@ -55,19 +62,6 @@ CREATE TABLE `reminder` (
 CREATE TABLE `reminds` (
   `reminder_id` int(11) DEFAULT NULL,
   `event_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_event`
---
-
-CREATE TABLE `tbl_event` (
-  `event_id` int(11) NOT NULL,
-  `event_name` char(10) DEFAULT NULL,
-  `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -105,18 +99,20 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pass_word`, `username`, `picture`) VALUES
 (21, 'Walter', 'Justice', 'walter.justice@gmail.com', 'password2', 'WJustice', 'images/man1.png'),
-(22, 'Bruce', 'Johnson', 'brucejohnson@gmail.com', 'password3', 'BJohnson', 'images/man1.png');
+(22, 'Bruce', 'Johnson', 'brucejohnson@gmail.com', 'password3', 'BJohnson', 'images/man1.png'),
+(28, 'Kristina', 'Reinhart', 'reinh014@cougars.csusm.edu', 'password4', 'KReinhart', 'images/man1.png');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `calendar`
+-- Indexes for table `events`
 --
-ALTER TABLE `calendar`
-  ADD KEY `calendar_eventID` (`event_id`),
-  ADD KEY `calendar_userID` (`user_id`);
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`evt_id`),
+  ADD KEY `evt_start` (`evt_start`),
+  ADD KEY `evt_end` (`evt_end`);
 
 --
 -- Indexes for table `reminder`
@@ -129,12 +125,6 @@ ALTER TABLE `reminder`
 --
 ALTER TABLE `reminds`
   ADD KEY `reminds_reminderID` (`reminder_id`);
-
---
--- Indexes for table `tbl_event`
---
-ALTER TABLE `tbl_event`
-  ADD PRIMARY KEY (`event_id`);
 
 --
 -- Indexes for table `timesheet`
@@ -154,21 +144,20 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `evt_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `calendar`
---
-ALTER TABLE `calendar`
-  ADD CONSTRAINT `calendar_eventID` FOREIGN KEY (`event_id`) REFERENCES `tbl_event` (`event_id`),
-  ADD CONSTRAINT `calendar_userID` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `reminds`
