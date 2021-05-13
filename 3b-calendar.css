@@ -1,14 +1,16 @@
 /* (A) FONT */
-html, body { font-family: arial, sans-serif; }
+html, body { font-family:  Verdana, sans-serif; }
 
 /* (B) PERIOD SELECTOR */
 #calPeriod input, #calPeriod select {
   padding: 10px;
   font-size: 1.5em;
+  font-weight: bold;
   border: 0;
   outline: none;
   cursor: pointer;
 }
+
 #calmonth { width: 180px; }
 #calyear { width: 100px; text-align: center; }
 
@@ -16,6 +18,11 @@ html, body { font-family: arial, sans-serif; }
 #calwrap {
   display: flex;
   flex-wrap: wrap;
+  /*overflow: scroll;*/
+  margin-left: 2em;
+  margin-right: 2em;
+  width: calc(100vw -1rem);
+  height: 70vh;
 }
 .calsq {
   box-sizing: border-box;
@@ -23,18 +30,18 @@ html, body { font-family: arial, sans-serif; }
   padding: 5px;
 }
 .calsq.head {
-  color: #fff;
-  background: #5250da;
+  color: #eee;
+  background: #9933FF;
   font-weight: bold;
   text-align: center;
 }
 .calsq.blank, .calsq.day {
   height: 120px;
   overflow-y: auto;
-  border: 1px solid #eee;
+  border: 1px solid lightgray;
 }
 .calsq.blank { background: #f2f2f2; }
-.calnum { color: #888; }
+.calnum { color: gray; }
 .calevt {
   height: 20px;
   font-size: 0.8em;
@@ -67,7 +74,7 @@ html, body { font-family: arial, sans-serif; }
   transform: translate(-50%, -50%);
   min-width: 320px;
   max-width: 400px;
-  background: #fafafa;
+  background: #eee;
   border: 1px solid #ccc;
   padding: 10px;
   width: 320px;
@@ -82,10 +89,10 @@ html, body { font-family: arial, sans-serif; }
 #calform label { margin-top: 10px; }
 #calformsave, #calformdel, #calformcx {
   border: 0;
-  color: #fff;
+  color: white;
   cursor: pointer;
   padding: 10px 0 !important;
   margin-top: 10px;
 }
-#calformsave { background: #5250da; }
-#calformdel, #calformcx { background: #a22a2a; }
+#calformsave { background: #aa80ff; }
+#calformdel, #calformcx { background: #76fca9; }

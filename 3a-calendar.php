@@ -4,9 +4,23 @@
     <title>Workbase: Calendar</title>
     <!-- (A) JS + CSS -->
     <link rel="stylesheet" href="3b-calendar.css">
+    <link rel="stylesheet" href="style.css">
     <script src="3c-calendar.js"></script>
   </head>
+  <header>
+      <img  src="images/logo.png" alt="logo" id="logo_img">
+
+      <div class="nav-container">
+         <ul id="nav">
+            <li><img src="images/calendar-icon.png" id="icon-nav"><a href="calendar.html">Calendar</a></li>
+            <li><img src="images/timesheet-icon.png" id="icon-nav"><a href="timesheet.html">Timesheet</a></li>
+            <li><img src="images/user-icon.png" id="icon-nav"><a href="profile.php" id="current">Profile</a></li>
+            <li><img src="images/logout-icon.png" id="icon-nav"><a href="logout.php">Logout</a></li>
+         </ul>
+      </div>
+   </header>
   <body>
+  <main>
     <!-- (B) PERIOD SELECTOR -->
     <div id="calPeriod"><?php
       // (B1) MONTH SELECTOR
@@ -47,5 +61,6 @@
       <input type="button" id="calformdel" value="Delete"/>
       <input type="button" id="calformcx" value="Cancel"/>
     </form></div>
+    </main>
   </body>
 </html>
