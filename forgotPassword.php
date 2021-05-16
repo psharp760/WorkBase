@@ -1,6 +1,7 @@
-
-
 <?php
+
+include 'db_connection.php';
+$conn = OpenCon();
 
 //    localhost/WorkBase-main/forgotPassword.php
 
@@ -21,12 +22,9 @@
   // Create object of PHPMailer class
   $mail = new PHPMailer(true);
 
-  //include 'db_connection.php';
-  //$conn = OpenCon();
-
   $output = '';
 
-  if (isset($_POST['submit'])) {         //$_POST['submit']
+  if (isset($_POST['submit'])) {
     //$name = $_POST['name'];
     $email = $_POST['email'];
     //$subject = $_POST['subject'];
@@ -34,28 +32,30 @@
 
     try {
       $mail->isSMTP();  //may need to remove if live hosting on server
-      $mail->Host = 'smtp.gmail.com';
-      $mail->SMTPAuth = true;
+      $mail->Host = 'smtp.gmail.com';   //names smtp server
+      $mail->SMTPAuth = true;           //sets smtp authenticator
       // Gmail ID which you want to use as SMTP server
       $mail->Username = 'workbase441@gmail.com';
       // Gmail Password
       $mail->Password = 'workbase!23';
+      //smtp encryption
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      //tcp port 
       $mail->Port = 587;
 
       // Email ID from which you want to send the email
       $mail->setFrom('workbase441@gmail.com');
       // Recipient Email ID where you want to receive emails
       $mail->addAddress($email);
+      //grabs user info with imputed email adress
+      $getUserInfo = "SELECT pass_word *FROM users WHERE email = '$email'";
 
       //retreive user password
-      //$getUserInfo = "SELECT *FROM users WHERE Email = '$email'";
-      //$pswd = msqli_query($conn, $getUserInfo);
+      $pswd = mysqli_query($conn, $getUserInfo);
 
       $mail->isHTML(true);
       $mail->Subject = 'Forgot Password';
-      //$mail->Body = "<h3>Name : $name <br>Email : $email <br>Message : $message</h3>";
-      $mail->Body = "<h3>Email : $email </h3>"; // <br>Password : $pswd</h3>";
+      $mail->Body = "<h3>Email : $email <br>Password : $pswd</h3>";
 
 
       $mail->send();
@@ -68,9 +68,9 @@
                 </div>';
     }
   }
+  CloseCon($conn);
 
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,60 +108,3 @@
 </body>
 </body>
 </html>
-
-
-<!---
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us Using PHPMailer & Gmail SMTP</title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css' />
-</head>
-
-<body class="bg-info">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 mt-3">
-        <div class="card border-danger shadow">
-          <div class="card-header bg-danger text-light">
-            <h3 class="card-title">Contact Us</h3>
-          </div>
-          <div class="card-body px-4">
-            <form action="#" method="POST">
-              <div class="form-group">
-              <?= $output; ?> 
-              </div>
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name" required>
-              </div>
-              <div class="form-group">
-                <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Enter E-Mail" required>
-              </div>
-              <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" name="subject" id="subject" class="form-control" placeholder="Enter Subject"
-                  required>
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" rows="5" class="form-control" placeholder="Write Your Message"
-                  required></textarea>
-              </div>
-              <div class="form-group">
-                <input type="submit" name="submit" value="Send" class="btn btn-danger btn-block" id="sendBtn">
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-
-</html>
---->
