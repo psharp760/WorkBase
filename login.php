@@ -18,7 +18,7 @@ session_start();
 <div class="container">
    <input class="login-input-user" type="text" id="uname" placeholder= "Username" name="uname" required> 
    <input class="login-input-psw" type="password" id="psw" placeholder= "Password" name="psw" required>
-   <p class="space1"><a href="ForgotPasswordHTML.html">Forget password?</a></p>
+   <p class="space1"><a href="forgotPassword.php">Forget password?</a></p>
 </div>
 <div>
    <button type = "submit" class="normalButton" name = "submitButton" onclick="loginCheck()">Login</button>
@@ -51,9 +51,10 @@ if(isset($_POST['submitButton'])){
 
     if($count == 1){
     	$_SESSION['username'] = $uname;
+      $_SESSION['user_id'] = $row['user_id'];
 
       //echo $row['first_name'];
-    header("Location:profile.php");
+    header("Location:3a-calendar.php");
     }
     else
     {

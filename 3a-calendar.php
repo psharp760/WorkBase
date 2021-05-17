@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,8 +17,8 @@
 
       <div class="nav-container">
          <ul id="nav">
-            <li><img src="images/calendar-icon.png" id="icon-nav"><a href="calendar.html" id="current">Calendar</a></li>
-            <li><img src="images/timesheet-icon.png" id="icon-nav"><a href="timesheet.html">Timesheet</a></li>
+            <li><img src="images/calendar-icon.png" id="icon-nav"><a href="3a-calendar.php" id="current">Calendar</a></li>
+            <li><img src="images/timesheet-icon.png" id="icon-nav"><a href="test-timesheet.php">Timesheet</a></li>
             <li><img src="images/user-icon.png" id="icon-nav"><a href="profile.php">Profile</a></li>
             <li><img src="images/logout-icon.png" id="icon-nav"><a href="logout.php">Logout</a></li>
          </ul>
@@ -38,7 +43,6 @@
         );
       }
       echo "</select>";
-
       // (B2) YEAR SELECTOR
       echo "<input type='number' id='calyear' value='".date("Y")."'/>";
     ?></div>
@@ -48,13 +52,19 @@
 
     <!-- (D) EVENT FORM -->
     <div id="calblock"><form id="calform">
-      <input type="hidden" id="evtid"/>  
+      <input type="hidden" id="evtid"/> 
       <label for="start">Date Start</label>
       <input type="date" id="evtstart" required/>
       <label for="end">Date End</label>
       <input type="date" id="evtend" required/>
+      <label for="startT">Time Start</label>
+      <input type ="time" id ="tmstart" required/>
+      <label for= "endT">Time End</label>
+      <input type ="time" id="tmend" required/>
       <label for="txt">Event</label>
       <textarea id="evttxt" required></textarea>
+      <label for= "txt">Username</label>
+      <textarea id="uname" required></textarea>
       <label for="color">Color</label>
       <input type="color" id="evtcolor" required/>
       <input type="submit" id="calformsave" value="Save"/>

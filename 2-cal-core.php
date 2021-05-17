@@ -1,4 +1,5 @@
 <?php
+
 class Calendar {
   // (A) CONSTRUCTOR - CONNECT TO DATABASE
   private $pdo = null;
@@ -23,7 +24,7 @@ class Calendar {
   }
 
   // (C) SAVE EVENT
-  function save ($start, $end, $txt, $color, $id=null) {
+  function save ($start, $end, $tstart, $tend, $txt, $uname, $color, $id=null) {
     // (C1) START & END DATE QUICK CHECK 
     $uStart = strtotime($start);
     $uEnd = strtotime($end);
@@ -34,11 +35,11 @@ class Calendar {
 
     // (C2) SQL - INSERT OR UPDATE
     if ($id==null) {
-      $sql = "INSERT INTO `events` (`evt_start`, `evt_end`, `evt_text`, `evt_color`) VALUES (?,?,?,?)";
-      $data = [$start, $end, $txt, $color];
+      $sql = "INSERT INTO `events` (`evt_start`, `evt_end`, `evt_startTime`, `evt_endTime`, `evt_text`, `evt_uname`, `evt_color`) VALUES (?,?,?,?,?,?,?)";
+      $data = [$start, $end, $tstart, $tend, $txt, $uname, $color];
     } else {
-      $sql = "UPDATE `events` SET `evt_start`=?, `evt_end`=?, `evt_text`=?, `evt_color`=? WHERE `evt_id`=?";
-      $data = [$start, $end, $txt, $color, $id];
+      $sql = "UPDATE `events` SET `evt_start`=?, `evt_end`=?, `evt_startTime`=?, `evt_endTime`=?, `evt_text`=?, `evt_uname`=?, `evt_color`=? WHERE `evt_id`=?";
+      $data = [$start, $end, $tstart, $tend, $txt, $uname, $color, $id];
     }
 
     // (C3) EXECUTE

@@ -55,6 +55,8 @@ var cal = {
       document.getElementById("evtid").value = "";
       document.getElementById("evtstart").value = `${year}-${month}-${day}`;
       document.getElementById("evtend").value = `${year}-${month}-${day}`;
+      document.getElementById("tmstart").value = "";
+      document.getElementById("tmend").value = "";
       document.getElementById("calformdel").style.display = "none";
     }
 
@@ -64,7 +66,10 @@ var cal = {
       document.getElementById("evtid").value = eid;
       document.getElementById("evtstart").value = edata['evt_start'];
       document.getElementById("evtend").value = edata['evt_end'];
+      document.getElementById("tmstart").value = edata['evt_startTime'];
+      document.getElementById("tmend").value = edata['evt_endTime'];
       document.getElementById("evttxt").value = edata['evt_text'];
+      document.getElementById("uname").value = edata['evt_uname'];
       document.getElementById("evtcolor").value = edata['evt_color'];
       document.getElementById("calformdel").style.display = "block";
     }
@@ -87,7 +92,10 @@ var cal = {
     data.append("req", "save");
     data.append("start", document.getElementById("evtstart").value);
     data.append("end", document.getElementById("evtend").value);
+    data.append("tstart", document.getElementById("tmstart").value);
+    data.append("tend", document.getElementById("tmend").value);
     data.append("txt", document.getElementById("evttxt").value);
+    data.append("uname", document.getElementById("uname").value);
     data.append("color", document.getElementById("evtcolor").value);
     if (eid!="") { data.append("eid", eid); }
 

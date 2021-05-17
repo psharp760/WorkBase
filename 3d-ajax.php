@@ -1,4 +1,5 @@
 <?php
+
 // (A) INVALID AJAX REQUEST
 if (!isset($_POST['req'])) { die("INVALID REQUEST"); }
 require "2-cal-core.php";
@@ -53,7 +54,7 @@ switch ($_POST['req']) {
   // (C) SAVE EVENT
   case "save":
     echo $CAL->save(
-      $_POST['start'], $_POST['end'], $_POST['txt'], $_POST['color'],
+      $_POST['start'], $_POST['end'], $_POST['tstart'], $_POST['tend'], $_POST['txt'], $_POST['uname'], $_POST['color'],
       isset($_POST['eid']) ? $_POST['eid'] : null
     ) ? "OK" : $CAL->error ;
     break;

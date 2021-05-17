@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2021 at 07:37 PM
+-- Generation Time: May 17, 2021 at 04:58 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -31,7 +31,10 @@ CREATE TABLE `events` (
   `evt_id` bigint(11) NOT NULL,
   `evt_start` date NOT NULL,
   `evt_end` date NOT NULL,
+  `evt_startTime` time NOT NULL,
+  `evt_endTime` time NOT NULL,
   `evt_text` text NOT NULL,
+  `evt_uname` varchar(20) NOT NULL,
   `evt_color` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -39,8 +42,8 @@ CREATE TABLE `events` (
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`) VALUES
-(1, '2021-05-10', '2021-05-10', 'Does this work?', '#f188da');
+INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_startTime`, `evt_endTime`, `evt_text`, `evt_uname`, `evt_color`) VALUES
+(10, '2021-05-18', '2021-05-18', '07:25:00', '23:25:00', 'pls work', 'KReinhart', '#fd9191');
 
 -- --------------------------------------------------------
 
@@ -147,7 +150,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `evt_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `evt_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
