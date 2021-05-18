@@ -27,8 +27,8 @@ $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
       <div class="nav-container">
          <ul id="nav">
-            <li><img src="images/calendar-icon.png" id="icon-nav"><a href="calendar.html">Calendar</a></li>
-            <li><img src="images/timesheet-icon.png" id="icon-nav"><a href="timesheet.html">Timesheet</a></li>
+            <li><img src="images/calendar-icon.png" id="icon-nav"><a href="3a-calendar.php">Calendar</a></li>
+            <li><img src="images/timesheet-icon.png" id="icon-nav"><a href="timesheet.php">Timesheet</a></li>
             <li><img src="images/user-icon.png" id="icon-nav"><a href="profile.php" id="current">Profile</a></li>
             <li><img src="images/logout-icon.png" id="icon-nav"><a href="logout.php">Logout</a></li>
          </ul>

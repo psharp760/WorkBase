@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2021 at 04:58 PM
+-- Generation Time: May 18, 2021 at 06:00 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -43,7 +43,10 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_startTime`, `evt_endTime`, `evt_text`, `evt_uname`, `evt_color`) VALUES
-(10, '2021-05-18', '2021-05-18', '07:25:00', '23:25:00', 'pls work', 'KReinhart', '#fd9191');
+(10, '2021-05-18', '2021-05-18', '07:25:00', '15:25:00', 'Hello, this is our project!', 'KReinhart', '#fd9191'),
+(12, '2021-05-19', '2021-05-19', '09:00:00', '15:00:00', 'You can add or delete events!', 'MSmith', '#80ff8e'),
+(13, '2021-05-21', '2021-05-21', '06:00:00', '13:00:00', 'You can assign events to other people!', 'WJustice', '#fff34d'),
+(14, '2021-05-20', '2021-05-20', '07:00:00', '21:00:00', 'Software Engineering Project', 'KReinhart', '#4dd2ff');
 
 -- --------------------------------------------------------
 
@@ -103,7 +106,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pass_word`, `username`, `picture`) VALUES
 (21, 'Walter', 'Justice', 'walter.justice@gmail.com', 'password2', 'WJustice', 'images/man1.png'),
 (22, 'Bruce', 'Johnson', 'brucejohnson@gmail.com', 'password3', 'BJohnson', 'images/man1.png'),
-(28, 'Kristina', 'Reinhart', 'reinh014@cougars.csusm.edu', 'password4', 'KReinhart', 'images/man1.png');
+(28, 'Kristina', 'Reinhart', 'reinh014@cougars.csusm.edu', 'password4', 'KReinhart', 'images/man1.png'),
+(29, 'Molly', 'Smith', 'molly.smith@gmail.com', 'password5', 'MSmith', 'images/man1.png');
 
 --
 -- Indexes for dumped tables
@@ -150,13 +154,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `evt_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `evt_id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
