@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>JavaScript/HTML5 Timesheet (PHP, MySQL)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- page layout -->
+  <style type="text/css">
+    p, body, td { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
+    body { padding: 0px; margin: 0px; background-color: #ffffff; }
+    a { color: #1155a3; }
+    .space { margin: 10px 0px 10px 0px; }
+    .header { background: #003267; background: linear-gradient(to right, #011329 0%,#00639e 44%,#011329 100%); padding:20px 10px; color: white; box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75); }
+    .header a { color: white; }
+    .header h1 a { text-decoration: none; }
+    .header h1 { padding: 0px; margin: 0px; }
+    .main { padding: 10px; margin-top: 10px; }
+    .generated { color: #999; margin: 5px 0px; }
+    .generated a { color: #999; }
+  </style>
+
+  <style>
+    body, input, select, button {
+      font-size: 14px;
+    }
+
+    select {
+      padding: 5px;
+    }
+
+  </style>
+
+  <!-- DayPilot library -->
+  <script src="js/daypilot/daypilot-all.min.js"></script>
+
+</head>
+<body>
+<div class="header">
+  <h1><a href='https://code.daypilot.org/46581/html5-timesheet-javascript-php'>JavaScript/HTML5 Timesheet (PHP, MySQL)</a></h1>
+  <div><a href="https://javascript.daypilot.org/">DayPilot for JavaScript</a> - HTML5 Calendar/Scheduling Components for JavaScript/Angular/React/Vue</div>
+</div>
+
+<div class="main">
+  <div class="space">
+    Employee: <select id="employee"></select>
+  </div>
+
+  <div id="dp"></div>
+
+  <div class="generated">Generated using <a href="https://builder.daypilot.org/">DayPilot UI Builder</a>.</div>
+</div>
+
+<script type="text/javascript">
+  var dp = new DayPilot.Scheduler("dp");
+
+  dp.viewType = "Days";
+  dp.startDate = new DayPilot.Date().firstDayOfMonth();
+  dp.days = dp.startDate.daysInMonth();
+
+  dp.timeHeaders = [
+    { groupBy: "Day", format: "MMMM yyyy" },
+    { groupBy: "Hour"}
+  ];
+
+  dp.heightSpec = "Max";
+  dp.height = 400;
+
+  dp.cellWidthSpec = "Auto";
+
+  dp.rowHeaderColumns = [
+    { title: "Day", width: 100},
+    { title: "Total", width: 100}
+  ];
+
+  dp.onBeforeRowHeaderRender = function(args) {
+    var duration = args.row.events.totalDuration();
+    var str;
+    if (duration.totalDays() >= 1) {
+      str = Math.floor(duration.totalHours()) + ":" + duration.toString("mm");
+    }
+    else {
+      str = duration.toString("H:mm");
+    }
+
+    if (args.row.columns[1]) {
+      args.row.columns[1].html = str + " hours";
+    }
+  };
+
+  // http://api.daypilot.org/daypilot-scheduler-oneventmoved/
+  dp.onEventMoved = function (args) {
+    DayPilot.Http.ajax({
+      url: "backend_move.php",
+      data: {
+        id: args.e.id(),
+        newStart: args.newStart,
+        newEnd: args.newEnd,
+      },
+      success: function(ajax) {
+        dp.message("Moved.");
+      }
+    });
+  };
+
+  // http://api.daypilot.org/daypilot-scheduler-oneventresized/
+  dp.onEventResized = function (args) {
+    DayPilot.Http.ajax({
+      url: "backend_resize.php",
+      data: {
+        id: args.e.id(),
+        newStart: args.newStart,
+        newEnd: args.newEnd
+      },
+      success: function(ajax) {
+        dp.message("Resized.");
+      }
+    });
+  };
+
+  // event creating
+  // http://api.daypilot.org/daypilot-scheduler-ontimerangeselected/
+  dp.onTimeRangeSelected = function (args) {
+    var name = DayPilot.Modal.prompt("New event name:", "Event").then(function(modal) {
+      dp.clearSelection();
+      if (modal.canceled) {
+        return;
+      }
+
+      DayPilot.Http.ajax({
+        url: "backend_create.php",
+        data: {
+          start: args.start,
+          end: args.end,
+          resource: document.querySelector("#employee").value,
+          name: modal.result
+        },
+        success: function(ajax) {
+          var data = ajax.data;
+          var e = {
+            start: args.start,
+            end: args.end,
+            id: data.id,
+            resource: args.resource,
+            text: modal.result
+          };
+          dp.events.add(e);
+
+          dp.message(data.message);
+        }
+      });
+
+    });
+  };
+
+  dp.onEventClick = function(args) {
+    DayPilot.Modal.prompt("Event name:", args.e.text()).then(function(modal) {
+      if (!modal.result) {
+        return;
+      }
+
+      var e = args.e;
+      DayPilot.Http.ajax({
+        url: "backend_update.php",
+        data: {
+          id: e.id(),
+          name: modal.result
+        },
+        success: function(ajax) {
+          var data = ajax.data;
+          e.data.text = modal.result;
+          dp.events.update(e);
+          dp.message(data.message);
+        }
+      });
+
+    });
+  };
+
+  dp.init();
+
+  loadResources();
+
+  document.querySelector("#employee").addEventListener("change", function(ev) {
+    loadEvents();
+  });
+
+  function loadResources() {
+    DayPilot.Http.ajax({
+      url: "backend_resources.php",
+      success: function(ajax) {
+        var select = document.querySelector("#employee");
+        ajax.data.forEach(function(item) {
+          var option = document.createElement("option");
+          option.value = item.id;
+          option.innerText = item.name;
+          select.appendChild(option);
+        });
+        loadEvents();
+      }
+    });
+  }
+
+  function loadEvents() {
+    var url = "backend_events.php?resource=" + document.querySelector("#employee").value + "&start=" + dp.visibleStart() + "&end=" + dp.visibleEnd();
+    dp.events.load(url, function() {
+      dp.message("Events loaded");
+    });
+  }
+
+</script>
+
+</body>
+</html>
